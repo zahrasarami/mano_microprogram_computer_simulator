@@ -1,0 +1,11 @@
+ORG 0
+        ADD BIN 111 I
+        ADD A2 
+        ADD A3 I
+        STORE DEC 100
+        STORE HEX FF
+        STORE BIN 1111
+ORG 1000
+    A1: DEC 20
+    A2: BIN 111
+    A3: HEX F

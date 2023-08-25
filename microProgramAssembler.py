@@ -76,9 +76,9 @@ def align( in_code ) :
     return output_code
 
 def fill_oprands_table( in_code ):
-    for line in code :
+    for line in in_code :
         if ':' in line[0] :
-           oprands[line[0]] =  line[-1]
+           oprands[line[0][:-1]] =  line[-1]
     
 def translate_to_binary( in_code ) :
     f1 = '000'
@@ -110,9 +110,11 @@ def translate_to_binary( in_code ) :
         output_code.append(f'{f1} {f2} {f3} {cd} {br} {ad} {line[-1]}')
     return output_code
         
-
-
-code = read_microProgramMemory()
-code = align(code)
-fill_oprands_table(code)
-translate_to_binary(code)
+def microProgramAssembler() :
+    code = read_microProgramMemory()
+    code = align(code)
+    fill_oprands_table(code)
+    return translate_to_binary(code)
+# code=microProgramAssembler() 
+# print(oprands)
+# print(code)
