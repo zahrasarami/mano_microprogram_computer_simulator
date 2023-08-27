@@ -7,6 +7,14 @@ def dec_to_bin(num , bit):
     ans = '0'*(bit-len(ans)) + ans
     return ans
 
+def find_index(in_key):
+    counter = 0 
+    for key, value in MPA.oprands.items():
+        if key==in_key :
+            return dec_to_bin(counter , 4)
+        counter += 1
+    return '0000'
+
 def bin_to_bin(num):
     ans = '0'*(16-len(num)) + num
     return ans
@@ -62,7 +70,7 @@ def translate_to_binary( in_code ) :
             else :
                 temp.append('0')
             #opcode:
-            temp.append(dec_to_bin(MPA.oprands[line[0]] , 4))
+            temp.append(find_index(line[0]))
             #address:
             if line[1] == 'BIN' :
                 temp.append(bin_to_bin(line[2]))
