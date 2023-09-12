@@ -1,3 +1,9 @@
+import sys
+PATH = '/home/zhra/projects/python/mano-microprogram-computer-simulater/'
+sys.path.append( PATH+'assembler/' )
+sys.path.append( PATH+'memory/' )
+
+import basicFunctions as BF
 import microProgramAssembler as MPA
 import programAssembler as PA
 import microOprations as MO
@@ -112,7 +118,7 @@ def step() :
         execute(command)   
 
 def initial(start) :
-    MO.R.PC = PA.dec_to_bin(start,11)
+    MO.R.PC = BF.dec_to_bin(start,11)
     MO.R.reset_CAR()
     MO.R.reset_AR()
     MO.R.reset_AC()

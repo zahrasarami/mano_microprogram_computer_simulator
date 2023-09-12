@@ -1,23 +1,15 @@
 import registers as R
 import mainMemory as M
+import basicFunctions as BF
 
 condition = False
-endFlag = False
-endProgramFlag = False
-
-def dec_to_bin(num , bit):
-    ans = bin(num)[2:]
-    ans = '0'*(bit-len(ans)) + ans
-    return ans
-
-def bin_to_bin(num , bit):
-    ans = '0'*(bit-len(num)-1) + num
-    return ans
+endFlag = False #end of each micro program cycle
+endProgramFlag = False # end of main program execution 
 
 #F1 oprands :
 
 def F1_001() : 
-    R.AC = bin_to_bin( bin(int(R.AC,2) + int(R.DR,2))[2:17],16 )
+    R.AC = BF.bin_to_bin( bin(int(R.AC,2) + int(R.DR,2))[2:17],16 )
     # # print('in add')
 
 def F1_010() :
@@ -25,7 +17,7 @@ def F1_010() :
     # # print('CLRAC')
 
 def F1_011() :
-    R.AC = bin_to_bin( bin(int(R.AC,2) + int('1',2))[2:17] , 16)
+    R.AC = BF.bin_to_bin( bin(int(R.AC,2) + int('1',2))[2:17] , 16)
     # # print('INCAC')
 
 def F1_100() :
@@ -47,15 +39,15 @@ def F1_111() :
 #F2 oprands :
 
 def F2_001() :
-    R.AC = bin_to_bin( bin(int(R.AC,2) - int(R.DR,2))[2:17] , 16 )
+    R.AC = BF.bin_to_bin( bin(int(R.AC,2) - int(R.DR,2))[2:17] , 16 )
     # print('SUB')
 
 def F2_010() :
-    R.AC = bin_to_bin( bin(int(R.AC,2) | int(R.DR,2))[2:17] , 16 )
+    R.AC = BF.bin_to_bin( bin(int(R.AC,2) | int(R.DR,2))[2:17] , 16 )
     # print('OR')
 
 def F2_011() :
-    R.AC = bin_to_bin( bin(int(R.AC,2) & int(R.DR,2))[2:17] , 16 )
+    R.AC = BF.bin_to_bin( bin(int(R.AC,2) & int(R.DR,2))[2:17] , 16 )
     # print('AND')
 
 def F2_100() :
@@ -67,7 +59,7 @@ def F2_101() :
     # print('ACTDR')
 
 def F2_110() :
-    R.DR = bin_to_bin( bin(int(R.DR,2) + int('1',2))[2:17] , 16 )
+    R.DR = BF.bin_to_bin( bin(int(R.DR,2) + int('1',2))[2:17] , 16 )
     # print('INCDR')
 
 def F2_111() :
@@ -77,11 +69,11 @@ def F2_111() :
 #F3 oprands :
  
 def F3_001() :
-    R.AC = bin_to_bin( bin(int(R.AC,2) ^ int(R.DR,2))[2:17] , 16)
+    R.AC = BF.bin_to_bin( bin(int(R.AC,2) ^ int(R.DR,2))[2:17] , 16)
     # print('XOR')
 
 def F3_010() :
-    R.AC = bin_to_bin( bin(~int(R.AC,2))[3:19] , 16 )
+    R.AC = BF.bin_to_bin( bin(~int(R.AC,2))[3:19] , 16 )
     # print('COM')
 
 def F3_011() :
@@ -94,7 +86,7 @@ def F3_100() :
 
 def F3_101() :
     # print(f'OLD{R.PC}')
-    R.PC = bin_to_bin( bin(int(R.PC,2) + int('1',2))[2:12] , 11 )
+    R.PC = BF.bin_to_bin( bin(int(R.PC,2) + int('1',2))[2:12] , 11 )
     # print(f'new{R.PC}')
 
 def F3_110() :
@@ -140,20 +132,20 @@ def BR_00(in_AD) :
     if condition==True :
         R.CAR = in_AD
     else :
-        R.CAR = dec_to_bin(int(R.CAR,2)+1 , 7)
+        R.CAR = BF.dec_to_bin(int(R.CAR,2)+1 , 7)
 
 def BR_01() :
     if condition==True :
-        R.CAR = bin_to_bin( bin(int(R.CAR,2) + int('1',2))[2:8] , 7 )
+        R.CAR = BF.bin_to_bin( bin(int(R.CAR,2) + int('1',2))[2:8] , 7 )
     else :
-        R.CAR = dec_to_bin(int(R.CAR,2)+1 , 7)
+        R.CAR = BF.dec_to_bin(int(R.CAR,2)+1 , 7)
 
 def BR_10(in_AD) :
     if condition==True :
-        R.SBR = bin_to_bin(bin(int(R.CAR,2) + int('1',2))[2:8] , 7)
+        R.SBR = BF.bin_to_bin(bin(int(R.CAR,2) + int('1',2))[2:8] , 7)
         R.CAR = in_AD
     else :
-        R.CAR = bin_to_bin( bin(int(R.CAR,2) + int('1',2))[2:8] , 7)
+        R.CAR = BF.bin_to_bin( bin(int(R.CAR,2) + int('1',2))[2:8] , 7)
 
 def BR_11() :
     global endFlag
