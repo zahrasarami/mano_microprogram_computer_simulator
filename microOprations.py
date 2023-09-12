@@ -86,7 +86,7 @@ def F3_100() :
 
 def F3_101() :
     # print(f'OLD{R.PC}')
-    R.PC = BF.bin_to_bin( bin(int(R.PC,2) + int('1',2))[2:12] , 11 )
+    R.PC = BF.bin_to_bin( bin(int(R.PC,2) + int('1',2))[2:12] , 12 )
     # print(f'new{R.PC}')
 
 def F3_110() :

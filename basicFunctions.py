@@ -6,7 +6,7 @@ def dec_to_bin(num , bit):
     return ans
 
 
-def bin_to_bin(num , bit=11):
+def bin_to_bin(num , bit=12):
     ans = '0'*(bit-len(num)-1) + num
     return ans
 

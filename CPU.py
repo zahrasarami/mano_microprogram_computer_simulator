@@ -132,20 +132,12 @@ def run() :
     programMemory = PA.programAssembler()
     mainMemory.fill_main_memory(programMemory)
     start = programMemory[0][-1]
-    # for i in range(0 , len(microProgramMemory)) :
-    #     print(microMemory.microMemory[i])
-    #     print( microProgramMemory[i], '\n')
-    # print(microProgramMemory)
-    # print("|||||||||||||||||||||||||||||||||||||||||")
-    # print(programMemory)
     
-
     initial(start)
     while MO.endProgramFlag==False :
         step()
-    # step()
-    # print(f'______pc is {MO.R.PC}')
-       
+
+# used in debug mode    
 def  print_registers() :
     print('AC:' ,MO.R.AC)
     print('PC:' ,MO.R.PC)
@@ -155,6 +147,6 @@ def  print_registers() :
     print('SBR:' ,MO.R.SBR)
 
 
-run()
-print_registers()
-print(mainMemory.Memory[20:23])
+# run()
+# print_registers()
+
