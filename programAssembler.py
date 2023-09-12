@@ -8,15 +8,15 @@ def dec_to_bin(num , bit):
     return ans
 
 def find_index(in_key):
-    counter = 0 
     for key, value in MPA.oprands.items():
         if key==in_key :
-            return dec_to_bin(counter , 4)
-        counter += 1
+            temp = value - value%4
+            return dec_to_bin(int(temp/4) , 4)
+        
     return '0000'
 
 def bin_to_bin(num):
-    ans = '0'*(16-len(num)) + num
+    ans = '0'*(11-len(num)) + num
     return ans
 
 def hex_to_bin(num):
@@ -64,22 +64,27 @@ def translate_to_binary( in_code ) :
     for line in in_code :
         temp = []
         if line[0] in MPA.oprands :
-            #I:
-            if line[-2] == 'I' :
-                temp.append('1')
-            else :
+            if line[0]=='HAL' :
                 temp.append('0')
-            #opcode:
-            temp.append(find_index(line[0]))
-            #address:
-            if line[1] == 'BIN' :
-                temp.append(bin_to_bin(line[2]))
-            elif line[1] == 'HEX' :
-                temp.append(hex_to_bin(line[2]))
-            elif line[1] == 'DEC' :
-                temp.append(dec_to_bin(int(line[2]),16))
+                temp.append(find_index('HAL'))
+                temp.append(11*'0')
             else :
-                temp.append(dec_to_bin(int(variables[line[1]]),11))
+                #I:
+                if line[-2] == 'I' :
+                    temp.append('1')
+                else :
+                    temp.append('0')
+                #opcode:
+                temp.append(find_index(line[0]))
+                #address:
+                if line[1] == 'BIN' :
+                    temp.append(bin_to_bin(line[2]))
+                elif line[1] == 'HEX' :
+                    temp.append(hex_to_bin(line[2]))
+                elif line[1] == 'DEC' :
+                    temp.append(dec_to_bin(int(line[2]),11))
+                else :
+                    temp.append(dec_to_bin(int(variables[line[1]]),11))
         else :
             #I:
             temp.append('0')
@@ -91,7 +96,7 @@ def translate_to_binary( in_code ) :
             elif line[1] == 'HEX' :
                 temp.append(hex_to_bin(line[2]))
             else :
-                temp.append(dec_to_bin(int(line[2]),16))
+                temp.append(dec_to_bin(int(line[2]),11))
         temp.append(line[-1])
         output_code.append(temp)
     return output_code
@@ -101,3 +106,11 @@ def programAssembler() :
     code = align(code)
     fill_variables_table(code)
     return translate_to_binary(code)
+#     temp = translate_to_binary(code)
+#     for i in range(0 , len(temp)):
+#         print(code[i])
+#         print(temp[i])
+
+# MPA.microProgramAssembler()
+# print(MPA.oprands)
+# programAssembler()

@@ -1,5 +1,5 @@
 F1 = {  'NOP':'000',
-        'ADD':'001', 
+        'Add':'001', 
         'CLRAC':'010', 
         'INCAC':'011', 
         'DRTAC':'100', 
@@ -81,16 +81,16 @@ def fill_oprands_table( in_code ):
            oprands[line[0][:-1]] =  line[-1]
     
 def translate_to_binary( in_code ) :
-    f1 = '000'
-    f2 = '000'
-    f3 = '000'
-    cd = '00'
-    br = '00'
-    ad = '0000000'
     output_code = []
     for line in in_code :
+        f1 = '000'
+        f2 = '000'
+        f3 = '000'
+        cd = '00'
+        br = '00'
+        ad = '0000000'
         check = 0
-        if line[check] in oprands :
+        if line[check][:-1] in oprands :
             check += 1
         for i in range(check , len(line)) :
             if line[i] in F1 :
@@ -107,7 +107,16 @@ def translate_to_binary( in_code ) :
                 ad = dec_to_bin(int(line[-1]+1))
             elif line[i] in oprands :
                 ad = dec_to_bin(int(oprands[line[i]]))
-        output_code.append(f'{f1} {f2} {f3} {cd} {br} {ad} {line[-1]}')
+                # print(f'+++{oprands[line[i]]} found in line{line} word {i}')
+        temp = []
+        temp.append(f1)
+        temp.append(f2)
+        temp.append(f3)
+        temp.append(cd)
+        temp.append(br)
+        temp.append(ad)
+        temp.append(line[-1])
+        output_code.append(temp)
     return output_code
         
 def microProgramAssembler() :
@@ -115,6 +124,10 @@ def microProgramAssembler() :
     code = align(code)
     fill_oprands_table(code)
     return translate_to_binary(code)
-# code=microProgramAssembler() 
+#     temp = translate_to_binary(code)
+#     for i in range(0 , len(temp)) :
+#         print(temp[i])
+#         print(code[i])
+
+# microProgramAssembler()
 # print(oprands)
-# print(code)
