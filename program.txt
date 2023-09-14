@@ -1,9 +1,0 @@
-ORG 0
-        ADD A1
-        ADD A3 
-        STORE A2
-        HAL
-ORG 20
-    A1: DEC 28
-    A2: BIN 111
-    A3: HEX F
